@@ -1,18 +1,30 @@
-#ifndef _funcoes_abp.h
+#ifndef _funcoes_abp
+#include <stdio.h>
+#include <stdlib.h>
+
 #define TRUE 1
 #define FALSE 0
+
+
+typedef struct _arvore{
+	struct _nodo *root;
+	int h;
+	
+}ARVORE;
+
+
 
 typedef struct _nodo{
 	int key;
 	int fat_b;
-	struct _nodo esq;
-	struct _nodo dir;
+	struct _nodo *esq;
+	struct _nodo *dir;
 }NODO;
 
 
 // Função para criação de árvore
 
-NODO* criaArvore(); // retorna um nodo NULL, a raiz da arvore
+ARVORE* criaArvore(); // retorna um nodo NULL, a raiz da arvore
 
 // Função para criação de nodo
 
