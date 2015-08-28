@@ -30,10 +30,24 @@ ARVORE* criaArvore(); // retorna um nodo NULL, a raiz da arvore
 
 NODO* criaNodo();
 
+// Função que pede o valor a ser inserido na árvore
+int valor();
+
+// Função que percorre a arvore procurando por chave
+
+NODO* buscar(int key, NODO* root);
+
+// Função para remover um nodo da árvore
+
+NODO* remover(int key, NODO* root);
+
+// Função para imprimir a árvore
+
+void imprimir(NODO* root);
 
 // 1. Função para inserção de nodos em uma ABP que armazene números inteiros.
 
-NODO* inserir(int new, NODO* root);
+NODO* inserir(int new, NODO* root, ARVORE* tree);
 
 
 /* 2. Função que recebe como parâmetro a árvore gerada no exercício 1 
