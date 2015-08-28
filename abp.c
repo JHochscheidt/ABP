@@ -12,8 +12,31 @@
 
 
 int main(){
+		
+	ARVORE *abp = criaArvore();
 	
 	
+	int op;
+	do{
+		puts(
+			"\n##########     MENU     #########\n"
+			"#   0. Sair                     #\n"
+			"#   1. Inserir nodo             #\n"
+			"#   2. Remover nodo             #\n"
+			"#   3. Imprimir arvore          #\n"
+			"#   4.                          #\n"
+			"##########              #########\n"
+		);
+		scanf("%d", &op);
+		switch(op){
+			case 1: inserir(valor(), abp->root, abp);
+				break;
+			case 2: //remover();
+				break;
+			case 3: imprimir(abp->root);
+				break;
+		}
+	}while(op > 0);	
 	
 	
 return 0;	
