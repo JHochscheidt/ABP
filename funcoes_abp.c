@@ -17,16 +17,23 @@ NODO* buscar(int key, NODO* root){
 	return NULL;
 }
 
+NODO* criaNodo(){
+	NODO *new = (NODO*) malloc(sizeof(NODO));
+	new->dir = NULL;
+	new->esq = NULL;
+	return new;
+}
+
+
 
 NODO* inserir(int key, NODO* root, ARVORE* tree){
 	
-	NODO *new = (NODO*) malloc(sizeof(NODO));
 	
+	if(!new)
+		return NULL;
 	// 1. Se ainda não há raiz. Novo nodo será a raiz
-	if(tree->root == NULL){
-		if(new == NULL)
-			return NULL; // problema na alocacao do novo nodo
-		tree->root = new; 
+	if(!root){
+		root = new; 
 		new->key = key;
 		new->esq = NULL;
 		new->dir = NULL;
