@@ -44,7 +44,7 @@ NODO* inserir(int key, NODO* root){
 				root->dir = new;
 			// senão, chama a inserção para a sub-arvore a direita
 			}else{
-				inserir(key, root->dir, tree);
+				inserir(key, root->dir);
 			}
 		}
 		//		b) se nodo for maior que raiz. Chama inserir para sub-árvore a direita
@@ -54,10 +54,16 @@ NODO* inserir(int key, NODO* root){
 				root->esq = new;
 			// senão, chama a inserção para a sub-arvore a direita
 			}else{
-				inserir(key, root->esq, tree);
+				inserir(key, root->esq);
 			}
 		}
 	}
 	return new;
 }
 
+int valor(){
+	int valor;
+	printf("Informe o valor a ser inserido na árvore:\n");
+	scanf("%d", &valor);
+	return valor;
+}
