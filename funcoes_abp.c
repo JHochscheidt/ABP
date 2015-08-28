@@ -11,7 +11,7 @@ ARVORE* criaArvore(){
 
 int valor(){
 	int valor;
-	printf("Informe o valor a ser inserido na árvore:\n");
+	printf("Informe o valor:\n");
 	scanf("%d", &valor);
 	return valor;
 }
@@ -31,6 +31,7 @@ NODO* criaNodo(){
 	NODO *new = (NODO*) malloc(sizeof(NODO));
 	new->dir = NULL;
 	new->esq = NULL;
+	new->fat_b = 0;
 	return new;
 }
 
@@ -41,11 +42,13 @@ NODO* inserir(int key, NODO* root, ARVORE* tree){
 	if(!new) return NULL;
 	// 1. Se ainda não há raiz. Novo nodo será a raiz
 	if(!tree->root){
-		tree->root = new; 
+		tree->root = new;
 	}else{
 		// 2. Se há raiz. Compara nodo com a raiz:
 		//		a) se nodo for menor que raiz. Chama inserir para sub-árvore a esquerda
+		
 		if(key > root->key){
+			root->fat_b++;
 			// se sub-árvore a direita for vazia. Só insere o novo nodo
 			if(!root->dir){ 
 				root->dir = new;
@@ -56,6 +59,7 @@ NODO* inserir(int key, NODO* root, ARVORE* tree){
 		}
 		//		b) se nodo for maior que raiz. Chama inserir para sub-árvore a direita
 		else if(key < root->key){
+			root->fat_b--;
 			// se sub-árvore a esquerda for vazia. Só insere o novo nodo
 			if(!root->esq){ 
 				root->esq = new;
@@ -68,7 +72,6 @@ NODO* inserir(int key, NODO* root, ARVORE* tree){
 	return new;
 }
 
-
 // inacabada
 NODO* remover(int key, NODO* root){
 	NODO *aux;
@@ -77,9 +80,7 @@ NODO* remover(int key, NODO* root){
 	if(!aux->dir && !aux->esq)
 		free(aux);
 	// se aux possui somente uma sub-arvore 
-	else if(aux->dir)
-		
-		
+			
 	// se aux possui sub-árvore a direita e a esquerda
 	
 	return aux;
@@ -95,6 +96,37 @@ void imprimir(NODO* root){
 		printf(">");
 	}
 }
+
+int fator(int key, ARVORE* tree){
+	
+	NODO *aux = buscar(key, tree->root);
+	if(!aux){
+		printf("Não existe este valor na árvore");
+		return 0;
+	}
+	
+	
+	return aux->fat_b;
+}
+
+int eh_AVL(ARVORE* tree){
+	
+
+
+	return 1;
+}
+
+int altura(NODO* root){
+	int altura_esq = 0; 
+	int altura_dir = 0;
+	if(root){			
+		altura_dir = 1 + altura(root->dir);
+		altura_esq = altura(root->esq);
+	
+	}
+	
+}
+
 
 
 
