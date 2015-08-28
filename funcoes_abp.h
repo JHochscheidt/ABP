@@ -45,6 +45,11 @@ NODO* remover(int key, NODO* root);
 
 void imprimir(NODO* root);
 
+// Função que calcula a altura da árvore
+
+int altura(NODO* root);
+
+
 // 1. Função para inserção de nodos em uma ABP que armazene números inteiros.
 
 NODO* inserir(int new, NODO* root, ARVORE* tree);
@@ -55,13 +60,13 @@ NODO* inserir(int new, NODO* root, ARVORE* tree);
  * do nó.
  */
  
-int fator(NODO* root, int key);
+int fator(int key, ARVORE* tree);
  
 /* 3. Função que recebe como parâmetro a árvore gerada no exercício 1
  * e retorna uma informação dizendo se a árvore é ou não AVL.
  */
  
-int eh_AVL(NODO* root);
+int eh_AVL(ARVORE* tree);
 
 /* 4. Função que recebe como parâmetro a árvore gerada no exercício 1
  * e retorna uma informação dizendo se a árvore está ou não

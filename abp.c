@@ -24,16 +24,20 @@ int main(){
 			"#   1. Inserir nodo             #\n"
 			"#   2. Remover nodo             #\n"
 			"#   3. Imprimir arvore          #\n"
-			"#   4.                          #\n"
+			"#   4. Fator nodo               #\n"
 			"##########              #########\n"
 		);
 		scanf("%d", &op);
 		switch(op){
-			case 1: inserir(valor(), abp->root, abp);
+			case 1: printf("Inserindo na árvore...");
+					inserir(valor(), abp->root, abp);
 				break;
 			case 2: //remover();
 				break;
 			case 3: imprimir(abp->root);
+				break;
+			case 4: printf("Procurando fator de nodo...");
+					printf("%d", fator(valor(), abp));
 				break;
 		}
 	}while(op > 0);	
