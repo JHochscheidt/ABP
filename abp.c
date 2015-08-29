@@ -19,12 +19,16 @@ int main(){
 	int op;
 	do{
 		puts(
-			"\n##########     MENU     #########\n"
+			"\n"
+			"##########     MENU     #########\n"
 			"#   0. Sair                     #\n"
-			"#   1. Inserir nodo             #\n"
-			"#   2. Remover nodo             #\n"
-			"#   3. Imprimir arvore          #\n"
-			"#   4. Fator nodo               #\n"
+			"#   1. Inserir valor            #\n"
+			"#   2. Remover valor            #\n"
+			"#   3. Buscar  valor            #\n"
+			"#   4. Imprimir arvore          #\n"
+			"#   5. Fator nodo               #\n"
+			"#   6. É AVL?                   #\n"
+			"#   7. Está Balanceada?         #\n"
 			"##########              #########\n"
 		);
 		scanf("%d", &op);
@@ -34,10 +38,23 @@ int main(){
 				break;
 			case 2: //remover();
 				break;
-			case 3: imprimir(abp->root);
+			case 3: if(buscar(valor(), abp->root)) printf("Valor existe");
+					else printf("Valor não existe\n");
 				break;
-			case 4: printf("Procurando fator de nodo...");
-					printf("%d", fator(valor(), abp));
+			case 4: imprimir(abp->root);
+				break;
+			case 5: printf("Procurando fator de nodo...\n");
+					printf("FATOR DO NODO [%d]", fator(valor(), abp));
+				break;
+			case 6:	printf("É AVL?");
+					if(is_AVL(abp->root) == 0) printf("[%d] Totalmente Balanceada\n", is_AVL(abp->root));
+					else if(is_AVL(abp->root) == 1) printf("[%d] Balanceada\n", is_AVL(abp->root));
+					else printf("[%d] Desbalanceada", is_AVL(abp->root));
+				break;
+			case 7: printf("está balanceada?\n");
+					if(is_balanceada(abp->root) == 0) printf("[%d] Totalmente Balanceada\n", is_balanceada(abp->root));
+					else if(is_balanceada(abp->root) == 1) printf("[%d] Balanceada\n", is_balanceada(abp->root));
+					else printf("[%d] Desbalanceada", is_balanceada(abp->root));
 				break;
 		}
 	}while(op > 0);	
