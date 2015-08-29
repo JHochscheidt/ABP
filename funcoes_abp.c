@@ -17,15 +17,14 @@ int valor(){
 }
 
 NODO* buscar(int key, NODO* root){
-	NODO *aux = root;
 	if(!root) return NULL;
 	else{
-		if(key > aux->key)
-			buscar(key, aux->dir);
-		else if(key < aux->key)
-			buscar(key, aux->esq);
+		if(key > root->key)
+			buscar(key, root->dir);
+		else if(key < root->key)
+			buscar(key, root->esq);
 	}
-	return aux;
+	return root;
 }
 
 NODO* criaNodo(int key){
@@ -95,7 +94,7 @@ void imprimir(NODO* root){
 		printf(">");
 	}
 }
-
+//errado
 int fator(int key, ARVORE* tree){
 	NODO *aux = buscar(key, tree->root);
 	if(!aux){
@@ -105,6 +104,7 @@ int fator(int key, ARVORE* tree){
 	return aux->fat_b;
 }
 
+// errado
 void calcula_fator(NODO* root){
 	if(!root) return;
 	
@@ -114,26 +114,19 @@ void calcula_fator(NODO* root){
 		root->fat_b = 1 + root->esq->fat_b;
 	else if(!root->esq && root->dir)
 		root->fat_b = -1 - root->dir->fat_b;
-	else root->fat_b = root->esq->fat_b - root->dir->fat_b;	
+	else root->fat_b = root->dir->fat_b - root->esq->fat_b;	
 }
 
+// errado
 int is_AVL(NODO* root){
 	
-	if(!root) return 0;// uma arvore vazia é uma arvore balanceada, e por extensão, uma AVL 
+	// se (alturaDir - alturaEsq) < 2 --> é AVL
 	
-	if(root->fat_b < 2 || root->fat_b > -2) // arvore balanceada
-		return root->fat_b; // 1 se for balanceada, 0 se for totalmente balanceada
-	else if(root->fat_b > 1 || root->fat_b < -1)
-		return root->fat_b; 
-	else{ 
-		if(root->esq)
-			is_AVL(root->esq);
-		if(root->dir)	
-			is_AVL(root->dir);
-	}
-	return 1;	
+	// se (alturaDir - alturaEsq) >= 2 --> não é AVL
+	return 1;
 }
 
+// errado
 int is_balanceada(NODO* root){
 	if(!root) return 1; 
 
@@ -149,12 +142,13 @@ int is_balanceada(NODO* root){
 
 }
 
+
 int altura(NODO* root){
-	if((altura(root->dir) - altura(root->esq)) < 2 && (altura(root->dir) - altura(root->esq)) > -2)
-		return (altura(root->dir) - altura(root->esq));
-	
-	printf("não é balanceada");
-	return (altura(root->dir) - altura(root->esq));	
+	int Hd = 0, He = 0;
+	if(root->dir) Hd = 1+ altura(root->dir);
+	if(root->esq) He = 1+ altura(root->esq);
+	if(Hd > He) return Hd;
+	else return He; 
 }
 
 
