@@ -18,16 +18,16 @@ typedef struct _nodo{
 	struct _nodo *dir;
 }NODO;
 
-// 1. Função para inserção de nodos em uma ABP que armazene números inteiros.
+/* 1. Função para inserção de nodos em uma ABP que armazene números inteiros. */
 NODO* inserir(int new, NODO* root, ARVORE* tree);
 
 /* 2. Função que recebe como parâmetro a árvore gerada no exercício 1 
  * e um valor e procura o valor em um nó da árvore e retorna o fator do nó. */
-int fator(int key, ARVORE* tree);
+int fator(ARVORE* tree, int key);
  
 /* 3. Função que recebe como parâmetro a árvore gerada no exercício 1
  * e retorna uma informação dizendo se a árvore é ou não AVL. */
-int is_AVL(NODO* root);
+int is_AVL(ARVORE* tree);
 
 /* 4. Função que recebe como parâmetro a árvore gerada no exercício 1
  * e retorna uma informação dizendo se a árvore está ou não completamente balanceada. */
