@@ -1,13 +1,29 @@
 #include "funcoes_abp.h"
 
 // retorna um nodo NULL, a raiz da arvore
-ARVORE* criaArvore(){
-	ARVORE* abp = (ARVORE*) malloc(sizeof (ARVORE) );
-	abp->root = NULL;
-	abp->h = -1;
-	return abp;
+TpArvore* criaArvoreVazia(){
+	TpArvore *arv = (TpArvore*) malloc(sizeof (TpArvore));
+	if(arv){
+		arv->root = NULL;
+		arv->h = 0;
+		//puts("arvore criada com sucesso");
+		return arv;
+	}
+	return NULL;	
 }
 
+// aloca nodo e insere informacao
+TpNodo* criaNodo(int key){
+	TpNodo *new = (TpNodo*) malloc(sizeof(TpNodo));
+	new->dir = NULL;
+	new->esq = NULL;
+	new->pai = NULL;
+	new->fat_b = 0;
+	new->info = key;
+	return new;
+}
+
+// retorna valor da entrada padrao
 int valor(){
 	int valor;
 	printf("Informe o valor:\n");
@@ -15,51 +31,43 @@ int valor(){
 	return valor;
 }
 
-NODO* criaNodo(int key){
-	NODO *new = (NODO*) malloc(sizeof(NODO));
-	new->dir = NULL;
-	new->esq = NULL;
-	new->fat_b = 0;
-	new->key = key;
-	return new;
-}
-
-NODO* inserir(int key, NODO* root, ARVORE* tree){
-	NODO *new = criaNodo(key);; 
-	// 1. Se ainda não há raiz. Novo nodo será a raiz
+// insere nodo e retorna-o
+TpNodo* inserir(int key, TpNodo* root, TpArvore* tree){
+	TpNodo *new = criaNodo(key);
+	// 1. primeiro nodo a ser inserido, inicializa a arvore
 	if(!tree->root){
 		tree->root = new;
 	}else{
 		// 2. Se h� raiz. Compara nodo com a raiz:
 		//		a) se nodo for menor que raiz. Chama inserir para sub-arvore a esquerda
-		if(key > root->key){
+		if(key > root->info){
 			// se sub-arvore a direita for vazia. Senao insere o novo nodo
 			if(!root->dir){ 
 				root->dir = new;
+				new->pai = root;
 			// senao, chama a insercao para a sub-arvore a direita
 			}else{
 				inserir(key, root->dir, tree);
 			}
-			
 		}
 		//		b) se nodo for maior que raiz. Chama inserir para sub-arvore a direita
-		else if(key < root->key){
+		else if(key < root->info){
 			// se sub-arvore a esquerda for vazia. senao insere o novo nodo
 			if(!root->esq){ 
 				root->esq = new;
+				new->pai = root;
 			// senao, chama a insercao para a sub-arvore a direita
 			}else{
 				inserir(key, root->esq, tree);
 			}
 		}
 	}
-	calcula_fator(root);
 	return new;
 }
 
 // inacabada
-NODO* remover(int key, NODO* root){
-	NODO *aux;
+TpNodo* remover(int key, TpNodo* root){
+	TpNodo *aux;
 	aux = buscar(key, root);
 	// se aux não possui sub-árvores
 	if(!aux->dir && !aux->esq)
@@ -72,17 +80,17 @@ NODO* remover(int key, NODO* root){
 
 }
 
-void imprimir(NODO* root){
+void imprimir(TpNodo* root){
 	if(root){
 		printf("<");
 		imprimir(root->esq);
-		printf("[ %d ]", root->key);
+		printf("([%d]-fb[%d])", root->info, root->fat_b);
 		imprimir(root->dir);
 		printf(">");
 	}
 }
 
-NODO* buscar(int key, NODO* root){
+TpNodo* buscar(int key, TpNodo* root){
 	if(!root)
 		return NULL;
 	buscar(key, root->dir);
@@ -90,29 +98,49 @@ NODO* buscar(int key, NODO* root){
 	return root;
 }
 
-int fator(ARVORE* tree, int key){
-	NODO *aux = buscar(key, tree->root);
+int fator(TpArvore* tree, int key){
+	TpNodo *aux = buscar(key, tree->root);
 	if(aux)
 		return aux->fat_b;
 	return -0 ;
 }
 
-int altura(NODO* root){
-	if(!root) return -1;
+int altura(TpNodo* root){
+	if(!root) return 0;
 	int Hd = 0, He = 0;
-	if(root->dir) Hd = 1 + altura(root->dir);
-	if(root->esq) He = 1 + altura(root->esq);
-	if(Hd > He) return Hd;
-	else return He; 
+	Hd = altura(root->dir);
+	He = altura(root->esq);
+	if(He > Hd) return 1 + He;
+	else return 1 + Hd; 
 }
 
-void calcula_fator(NODO* root){
+void calcula_fator(TpNodo* root){
 	if(!root)
 		return; 
-	root->fat_b = (altura(root->dir) - altura(root->esq));
+	root->fat_b = (altura(root->esq) - altura(root->dir));
+
+	calcula_fator(root->esq);
+	calcula_fator(root->dir);
 }
 
-int is_AVL(ARVORE* tree){
+/*
+ * int calcula_fator(TpNodo *root){
+	if(root == NULL) return 0;
+	return (altura(root->esq) - altura(root->dir)); // calcula o fat_b do nodo atual
+}
+* 
+void atualiza_fator(TpNodo *root){
+     if (root != NULL)
+     {
+		 root->fat_b=(altura(root->esq)- altura(root->dir));
+		 atualiza_fator(root->esq);
+		 atualiza_fator(root->dir);
+     }
+}*/
+
+
+
+int is_AVL(TpArvore* tree){
 	// se (alturaDir - alturaEsq) < 2 --> é AVL
 	if(!tree->root) return TRUE; // significa que arvore esta vazia, logo est� balanceada e � uma AVL
 	
@@ -121,7 +149,7 @@ int is_AVL(ARVORE* tree){
 	// se (alturaDir - alturaEsq) >= 2 --> não é AVL
 }
 
-int is_balanceada(NODO* root){
+int is_balanceada(TpNodo* root){
 	if(!root) return TRUE; 
 	
 	else if(root->fat_b < -1 || root->fat_b > 1)
