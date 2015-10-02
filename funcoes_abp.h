@@ -9,52 +9,53 @@
 typedef struct _arvore{
 	struct _nodo *root;
 	int h;
-}ARVORE;
+}TpArvore;
 
 typedef struct _nodo{
-	int key;
+	int info;
 	int fat_b;
+	struct _nodo *pai;
 	struct _nodo *esq;
 	struct _nodo *dir;
-}NODO;
+}TpNodo;
 
 /* 1. Função para inserção de nodos em uma ABP que armazene números inteiros. */
-NODO* inserir(int new, NODO* root, ARVORE* tree);
+TpNodo* inserir(int new, TpNodo* root, TpArvore* tree);
 
 /* 2. Função que recebe como parâmetro a árvore gerada no exercício 1 
  * e um valor e procura o valor em um nó da árvore e retorna o fator do nó. */
-int fator(ARVORE* tree, int key);
+int fator(TpArvore* tree, int key);
  
 /* 3. Função que recebe como parâmetro a árvore gerada no exercício 1
  * e retorna uma informação dizendo se a árvore é ou não AVL. */
-int is_AVL(ARVORE* tree);
+int is_AVL(TpArvore* tree);
 
 /* 4. Função que recebe como parâmetro a árvore gerada no exercício 1
  * e retorna uma informação dizendo se a árvore está ou não completamente balanceada. */
-int is_balanceada(NODO* root);
+int is_balanceada(TpNodo* root);
 
 // Função para criação de árvore
-ARVORE* criaArvore(); // retorna um nodo NULL, a raiz da arvore
+TpArvore* criaArvoreVazia(); // retorna um nodo NULL, a raiz da arvore
 
 // Função para criação de nodo
-NODO* criaNodo(int key);
+TpNodo* criaNodo(int key);
 
 // Função que pede o valor a ser inserido na árvore
 int valor();
 
 // Função que percorre a arvore procurando por chave
-NODO* buscar(int key, NODO* root);
+TpNodo* buscar(int key, TpNodo* root);
 
 // Função para remover um nodo da árvore
-NODO* remover(int key, NODO* root);
+TpNodo* remover(int key, TpNodo* root);
 
 // Função para imprimir a árvore
-void imprimir(NODO* root);
+void imprimir(TpNodo* root);
 
 // Função que calcula a altura da árvore
-int altura(NODO* root);
+int altura(TpNodo* root);
 
 // Função que calcula o fator de balanceamento de um nó 
-void calcula_fator(NODO* root);
+void calcula_fator(TpNodo* root);
 
 #endif
