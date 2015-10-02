@@ -13,8 +13,13 @@
 
 int main(){
 	TpArvore *arv = criaArvoreVazia();
+	inserir(5, arv->root, arv);
+	calcula_fator(arv->root);
+	inserir(6, arv->root, arv);
+	calcula_fator(arv->root);
 	
-	
+	TpNodo *desb;
+	TpNodo *pai;
 	int op;
 	do{
 		puts(
@@ -35,8 +40,31 @@ int main(){
 		switch(op){
 			case 1: printf("Inserindo na árvore...");
 					inserir(valor(), arv->root, arv);
-					printf("raiz %d\n", arv->root->info);
 					calcula_fator(arv->root);
+					imprimir(arv->root);
+					desb = is_balanceada(arv->root);
+					if(desb){
+						// desbalanceado
+						// fazer balanceamento
+						
+						pai = desb->pai;
+						if(desb->pai == NULL){
+							//desb é a raiz
+							desb = balancearArvore(desb);
+							arv->root = desb;
+						}else{
+							desb = balancearArvore(desb);
+							if(desb->info < pai->info){
+							pai->esq = desb;
+							desb->pai = pai;
+							}else if(desb->info > pai->info){
+							pai->dir = desb;
+							desb->pai = pai;
+							}
+						}
+					}
+					calcula_fator(arv->root);
+					//printf("raiz %d\n", arv->root->info);
 				break;
 			case 2: //remover();
 				break;
@@ -54,7 +82,7 @@ int main(){
 					else printf("[%d] NÃO", is_AVL(arv));
 				break;
 			case 8: printf("está balanceada?\n");
-					if(is_balanceada(arv->root) == TRUE) printf("Está balanceada");
+					if(is_balanceada(arv->root) == NULL) printf("Está balanceada");
 					else printf("Desbalanceada");
 				break;
 		}
