@@ -32,7 +32,7 @@ int is_AVL(TpArvore* tree);
 
 /* 4. Função que recebe como parâmetro a árvore gerada no exercício 1
  * e retorna uma informação dizendo se a árvore está ou não completamente balanceada. */
-int is_balanceada(TpNodo* root);
+TpNodo *is_balanceada(TpNodo* root);
 
 // Função para criação de árvore
 TpArvore* criaArvoreVazia(); // retorna um nodo NULL, a raiz da arvore
@@ -57,5 +57,17 @@ int altura(TpNodo* root);
 
 // Função que calcula o fator de balanceamento de um nó 
 void calcula_fator(TpNodo* root);
+
+TpNodo *balancearArvore(TpNodo *root);
+// rotacoes
+TpNodo *rotacaoSimplesDireita(TpNodo *root);
+TpNodo *rotacaoSimplesEsquerda(TpNodo *root);
+TpNodo *rotacaoDuplaDireita(TpNodo *root);
+TpNodo *rotacaoDuplaEsquerda(TpNodo *root);
+
+
+
+TpNodo *buscaNodoDesbalanceado(TpNodo *root);
+
 
 #endif
