@@ -12,8 +12,7 @@
 
 
 int main(){
-		
-	ARVORE *abp = criaArvore();
+	TpArvore *arv = criaArvoreVazia();
 	
 	
 	int op;
@@ -35,25 +34,27 @@ int main(){
 		scanf("%d", &op);
 		switch(op){
 			case 1: printf("Inserindo na árvore...");
-					inserir(valor(), abp->root, abp);
+					inserir(valor(), arv->root, arv);
+					printf("raiz %d\n", arv->root->info);
+					calcula_fator(arv->root);
 				break;
 			case 2: //remover();
 				break;
-			case 3:  if(! buscar(valor(), abp->root)) printf("Valor não existe");
+			case 3:  if(! buscar(valor(), arv->root)) printf("Valor não existe");
 					else printf("Valor existe");
 				break;
-			case 4: imprimir(abp->root);
+			case 4: imprimir(arv->root);
 				break;
-			case 5: printf("altura[%d]", altura(abp->root));
+			case 5: printf("altura[%d]", altura(arv->root));
 				break;
-			case 6: printf("FATOR DO NODO [%d]", fator(abp, valor()));
+			case 6: printf("FATOR DO NODO [%d]", fator(arv, valor()));
 				break;
 			case 7:	printf("É AVL?");
-					if(is_AVL(abp) == TRUE)  printf("[%d] SIM ", is_AVL(abp));
-					else printf("[%d] NÃO", is_AVL(abp));
+					if(is_AVL(arv) == TRUE)  printf("[%d] SIM ", is_AVL(arv));
+					else printf("[%d] NÃO", is_AVL(arv));
 				break;
 			case 8: printf("está balanceada?\n");
-					if(is_balanceada(abp->root) == TRUE) printf("Está balanceada");
+					if(is_balanceada(arv->root) == TRUE) printf("Está balanceada");
 					else printf("Desbalanceada");
 				break;
 		}
